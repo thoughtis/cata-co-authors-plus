@@ -92,5 +92,4 @@ class Fields {
 
 		return array_merge( $fields_to_return, $new_fields );
 	}
-
 }
