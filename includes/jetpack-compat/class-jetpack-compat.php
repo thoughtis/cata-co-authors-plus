@@ -3,6 +3,7 @@
  * Jetpack Compat
  * 
  * @package Cata\CoAuthors_Plus
+ * @since 0.1.1
  */
 
 namespace Cata\CoAuthors_Plus;
