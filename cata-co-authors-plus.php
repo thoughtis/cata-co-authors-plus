@@ -22,4 +22,4 @@
  */
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 
-Cata\CoAuthors_Plus\Jetpack_Compat::instance();
+new Cata\CoAuthors_Plus\Jetpack_Compat();

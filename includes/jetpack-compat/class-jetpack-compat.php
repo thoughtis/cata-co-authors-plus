@@ -11,31 +11,11 @@ namespace Cata\CoAuthors_Plus;
  * Jetpack Compat
  */
 class Jetpack_Compat {
-	
-	/**
-	 * Singleton Instance
-	 *
-	 * @var null|self $instance
-	 */
-	private static $instance = null;
-	
 	/**
 	 * Construct
 	 */
 	public function __construct() {
 		add_filter( 'jetpack_sitemap_image_skip_post', array( __CLASS__, 'image_sitemap_skip_avatars' ), 10, 2 );
-	}
-
-	/**
-	 * Instance
-	 * 
-	 * @return Jetpack_Compat
-	 */
-	public static function instance() : Jetpack_Compat {
-		if ( null === self::$instance ) {
-			self::$instance = new Jetpack_Compat();
-		}
-		return self::$instance;
 	}
 
 	/**
