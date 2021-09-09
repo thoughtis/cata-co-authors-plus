@@ -61,3 +61,21 @@ function cata_cap_has_global_guest_author() : bool {
 		cata_cap_get_global_guest_author()
 	);
 }
+
+/**
+ * Get The CoAuthor Meta
+ * Wrap get_the_coauthor_meta that comes with CAP to return a useable value,
+ * not an array of values.
+ * 
+ * @param string                 $property CoAuthor data we want.
+ * @param stdClass|WP_User|false $author CoAuthor that is either a user or Guest Author.
+ * @param mixed                  $default Default if that property is not set.
+ * @return mixed Property or default.
+ */
+function cata_cap_get_the_coauthor_meta( string $property, $author, $default = '' ) {
+	$cap_meta = get_the_coauthor_meta( $property, $author->ID );
+	if ( ! isset( $cap_meta[$author->ID] ) || empty( $cap_meta[$author->ID] ) ) {
+		return $default;
+	}
+	return $cap_meta[$author->ID];
+}
