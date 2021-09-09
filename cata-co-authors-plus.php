@@ -16,3 +16,26 @@
  * License:     GPL v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
+/**
+ * Require Jetpack_Compat class
+ */
+require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
+
+/**
+ * Init Jetpack Compat
+ */
+function cata_cap_init_jetpack_compat() : void {
+	global $cata_cap_jetpack_compat;
+	$cata_cap_jetpack_compat = cata_cap_jetpack_compat();
+}
+add_action( 'init', 'cata_cap_init_jetpack_compat' );
+
+/**
+ * Jetpack Compat
+ * 
+ * @return Cata\CoAuthors_Plus\Jetpack_Compat
+ */
+function cata_cap_jetpack_compat() : Cata\CoAuthors_Plus\Jetpack_Compat {
+	return Cata\CoAuthors_Plus\Jetpack_Compat::instance();
+}
