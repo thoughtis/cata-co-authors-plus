@@ -18,8 +18,13 @@
  */
 
 /**
- * Require Jetpack_Compat class
+ * Require classes
  */
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
+require_once __DIR__ . '/includes/fields/class-fields.php';
 
+/**
+ * Instantiate Classes
+ */
+new Cata\CoAuthors_Plus\Fields();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
