@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="Cata_CoAuthors_Plus">
+  <description>WordPress-VIP-Go</description>
+  <file>./</file>
+  <exclude-pattern>*/vendor/*</exclude-pattern>
+  <rule ref="WordPress"/>
+  <rule ref="WordPress-VIP-Go"/>
+</ruleset>
