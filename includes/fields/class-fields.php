@@ -3,6 +3,7 @@
  * Fields
  * 
  * @package Cata\CoAuthors_Plus
+ * @since 0.1.2
  */
 
 namespace Cata\CoAuthors_Plus;

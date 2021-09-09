@@ -18,6 +18,11 @@
  */
 
 /**
+ * Require Global Functions
+ */
+require_once __DIR__ . '/includes/global-functions.php';
+
+/**
  * Require classes
  */
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
