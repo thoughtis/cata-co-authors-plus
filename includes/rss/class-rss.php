@@ -38,7 +38,7 @@ class RSS {
 		}
 
 		// Bail if the current post type does not support CoAuthors.
-		if ( ! in_array( get_post_type( get_the_ID() ), $coauthors_plus->supported_post_types ) ) {
+		if ( ! in_array( get_post_type( get_the_ID() ), $coauthors_plus->supported_post_types, true ) ) {
 			return $author;
 		}
 
