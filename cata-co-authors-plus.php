@@ -25,6 +25,7 @@ require_once __DIR__ . '/includes/global-functions.php';
 /**
  * Require classes
  */
+require_once __DIR__ . '/includes/api/class-api.php';
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 require_once __DIR__ . '/includes/fields/class-fields.php';
 require_once __DIR__ . '/includes/rss/class-rss.php';
@@ -32,6 +33,7 @@ require_once __DIR__ . '/includes/rss/class-rss.php';
 /**
  * Instantiate Classes
  */
+new Cata\CoAuthors_Plus\API();
 new Cata\CoAuthors_Plus\Fields();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
 new Cata\CoAuthors_Plus\RSS();
