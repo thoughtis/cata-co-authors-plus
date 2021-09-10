@@ -27,9 +27,11 @@ require_once __DIR__ . '/includes/global-functions.php';
  */
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 require_once __DIR__ . '/includes/fields/class-fields.php';
+require_once __DIR__ . '/includes/rss/class-rss.php';
 
 /**
  * Instantiate Classes
  */
 new Cata\CoAuthors_Plus\Fields();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
+new Cata\CoAuthors_Plus\RSS();
