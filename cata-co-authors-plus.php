@@ -26,6 +26,8 @@ require_once __DIR__ . '/includes/global-functions.php';
  * Require classes
  */
 require_once __DIR__ . '/includes/api/class-api.php';
+require_once __DIR__ . '/includes/api/coauthor-controller/class-coauthor-controller.php';
+require_once __DIR__ . '/includes/api/guest-author-controller/class-guest-author-controller.php';
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 require_once __DIR__ . '/includes/fields/class-fields.php';
 require_once __DIR__ . '/includes/rss/class-rss.php';

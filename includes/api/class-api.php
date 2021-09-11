@@ -3,9 +3,12 @@
  * API
  * 
  * @package Cata\CoAuthors_Plus
+ * @since 0.2.2
  */
 
 namespace Cata\CoAuthors_Plus;
+
+use WP_REST_Request;
 
 class API {
 	/**
@@ -33,7 +36,9 @@ class API {
 		return array_merge(
 			$args,
 			array(
-				'show_in_rest' => true,
+				'rest_base'             => 'coauthor',
+				'rest_controller_class' => 'Cata\\CoAuthors_Plus\\API\\CoAuthor_Controller',
+				'show_in_rest'          => true
 			)
 		);
 	}
@@ -53,6 +58,7 @@ class API {
 		return array_merge(
 			$args,
 			array(
+				'rest_controller_class' => 'Cata\\CoAuthors_Plus\\API\\Guest_Author_Controller',
 				'show_in_rest' => true,
 				'supports'     => array_merge(
 					$args['supports'],
@@ -85,6 +91,9 @@ class API {
 				'guest-author',
 				$meta_key,
 				array(
+					// Auth prevents unauthorized editing and deleting, not reading.
+					// Might not need this if we restrict reading the Tax and Post Type.
+					'auth_callback'     => array( __CLASS__, 'current_user_has_cap_cap' ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'single'            => true,
 					'show_in_rest'      => true,
@@ -104,18 +113,50 @@ class API {
 	}
 
 	/**
-	 * @link https://gist.github.com/maheshwaghmare/0bbe5eabceed24aa76ef1eabe684a748
+	 * Current User Has CAP Capability
+	 * 
+	 * @global CoAuthors_Plus $coauthors_plus
+	 * @return bool Whether current user has the capability to edit Guest Authors.
 	 */
-	public static function post_meta_request_params( $args, $request ) {
-		
-		$args = array_merge(
+	public static function current_user_has_cap_cap() : bool {
+		global $coauthors_plus;
+		// No CAP so how could they have cap?
+		if ( ! is_a( $coauthors_plus, 'CoAuthors_Plus' ) || ! isset( $coauthors_plus->guest_authors ) ) {
+			return false;
+		}
+		if ( ! isset( $coauthors_plus->guest_authors->list_guest_authors_cap ) ) {
+			return false;
+		}
+		return current_user_can( $coauthors_plus->guest_authors->list_guest_authors_cap );
+	}
+
+	/**
+	 * Post Meta Request Params
+	 * Allow filtering Guest Authors by email for authorized users.
+	 * 
+	 * @link https://developer.wordpress.org/reference/hooks/rest_this-post_type_query/
+	 * @link https://gist.github.com/maheshwaghmare/0bbe5eabceed24aa76ef1eabe684a748
+	 * @param array $args Initial query args.
+	 * @param WP_REST_Request $request
+	 * @return array $args Updated query args.
+	 */
+	public static function post_meta_request_params( array $args, WP_REST_Request $request ) {
+		// Only allowed for users who can edit Guest Authors.
+		// This might be redundant since viewing requires capabilities check.
+		if ( ! self::current_user_has_cap_cap() ) {
+			return $args;
+		}
+		// Only cap-user_email is supported.
+		if ( ! isset( $request['meta_key'] ) || 'cap-user_email' !== $request['meta_key'] ) {
+			return $args;
+		}
+
+		return array_merge(
 			$args,
 			array(
 				'meta_key'   => $request['meta_key'],
 				'meta_value' => $request['meta_value'],
 			)
 		);
-
-		return $args;
 	}
 }
