@@ -12,6 +12,9 @@ use Cata\CoAuthors_Plus\API;
 use WP_Error;
 use WP_REST_Posts_Controller;
 
+/**
+ * Guest Author Controller
+ */
 class Guest_Author_Controller extends WP_REST_Posts_Controller {
 
 	/**
