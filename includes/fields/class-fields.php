@@ -29,6 +29,59 @@ class Fields {
 	public function __construct() {
 		add_filter( 'coauthors_guest_author_fields', array( __CLASS__, 'remove_unused_meta_fields' ) );
 		add_filter( 'coauthors_guest_author_fields', array( __CLASS__, 'add_custom_meta_fields' ), 20, 2 );
+
+		// @priority 20 because CoAuthors_Guest_Authors->action_add_meta_boxes is at 10.
+		add_action( 'add_meta_boxes', array( __CLASS__, 'replace_guest_author_bio_metabox' ), 20, 2 );
+
+	}
+
+	public static function replace_guest_author_bio_metabox() : void {
+		if ( 'guest-author' !== get_post_type() ) {
+			return;
+		}
+		remove_meta_box( 'coauthors-manage-guest-author-bio', 'guest-author', 'normal' );
+		add_meta_box( 'cata-coauthors-manage-guest-author-bio', 'Biographical Info', array( __CLASS__, 'metabox_guest_author_bio' ), 'guest-author', 'normal', 'default' );
+	}
+
+	public static function metabox_guest_author_bio() : void {
+
+		global $post, $coauthors_plus;
+
+		$fields = $coauthors_plus->guest_authors->get_guest_author_fields( 'about' );
+
+		if ( empty( $fields ) ) {
+			return;
+		}
+
+		foreach ( $fields as $field ) {
+
+			$meta_key = 'cap-' . $field['key'];
+			$input_id = 'cata-' . $meta_key;
+			$settings = array(
+				'media_buttons' => false,
+				'textarea_name' => $meta_key,
+				'teeny'         => true,
+				'tinymce'       => array(
+					'theme_advanced_path'               => false,
+					'theme_advanced_statusbar_location' => 'none',
+				),
+				'quicktags'     => array(
+					'buttons' => 'link,em,strong,close',
+				),
+			);
+
+			?>
+			<label for="<?php echo esc_attr( $input_id ) ?>"><?php echo esc_html( $field['label'] ); ?></label>
+			<?php
+
+			wp_editor(
+				get_post_meta( $post->ID, $meta_key, true ),
+				$input_id,
+				$settings
+			);
+
+		}
+
 	}
 
 	/**
