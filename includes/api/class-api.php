@@ -79,33 +79,67 @@ class API {
 	 */
 	public static function register_guest_author_meta() : void {
 
-		$meta_keys = array(
+		$text_fields = array(
 			'cap-display_name',
 			'cap-first_name',
 			'cap-last_name',
 			'cap-user_email',
 			'cap-user_login',
 			'cap-website',
-			'cap-description',
 			'cap-instagram',
 			'cap-tiktok',
 			'cap-twitter',
 		);
 
-		foreach ( $meta_keys as $meta_key ) {
+		$html_fields = array(
+			'cap-description',
+			'cap-tagline',
+		);
+
+		foreach ( $text_fields as $meta_key ) {
 			register_post_meta(
 				'guest-author',
 				$meta_key,
-				array(
-					// Auth prevents unauthorized editing and deleting, not reading.
-					'auth_callback'     => array( __CLASS__, 'current_user_has_cap_cap' ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'single'            => true,
-					'show_in_rest'      => true,
-					'type'              => 'string',
+				self::get_meta_args()
+			);
+		}
+
+		/**
+		 * These fields need a sanitize callback that handles HTML.
+		 * CAP applies `wp_filter_post_kses` when saving meta through the Guest Author post editor.
+		 * If we use `wp_filter_post_kses` here too it causes double escaping.
+		 */
+		foreach ( $html_fields as $meta_key ) {
+			register_post_meta(
+				'guest-author',
+				$meta_key,
+				self::get_meta_args(
+					array(
+						'sanitize_callback' => 'wp_kses_post',
+					)
 				)
 			);
 		}
+	}
+
+	/**
+	 * Get Meta Tags
+	 * 
+	 * @param null|array $args Arguments for register_post_meta.
+	 * @return array
+	 */
+	public static function get_meta_args( ?array $args = array() ) : array {
+		return array_merge(
+			array(
+				// Auth prevents unauthorized editing and deleting, not reading.
+				'auth_callback'     => array( __CLASS__, 'current_user_has_cap_cap' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'single'            => true,
+				'show_in_rest'      => true,
+				'type'              => 'string',
+			),
+			$args
+		);
 	}
 
 	/**
