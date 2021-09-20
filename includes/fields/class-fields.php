@@ -32,6 +32,8 @@ class Fields {
 		add_filter( 'coauthors_guest_author_fields', array( __CLASS__, 'add_custom_meta_fields' ), 20, 2 );
 		// @priority 20 because CoAuthors_Guest_Authors->action_add_meta_boxes is at 10.
 		add_action( 'add_meta_boxes', array( __CLASS__, 'replace_guest_author_bio_metabox' ), 20, 2 );
+		add_action( 'do_meta_boxes', array( __CLASS__, 'remove_cutstom_fields_box' ), 10, 0 );
+		add_action( 'edit_form_top', array( __CLASS__, 'remove_title_support' ) );
 	}
 
 	/**
@@ -181,5 +183,22 @@ class Fields {
 			</table>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Remove Custom Fields Box
+	 * Custom Fields must be enabled to get meta data into the API,
+	 * but we don't actually want it to be edited directly in the post editor.
+	 */
+	public static function remove_cutstom_fields_box() : void {
+		remove_meta_box( 'postcustom', 'guest-author', 'normal' );
+	}
+
+	/**
+	 * Remove Title Support
+	 * The API needs title support, but the post editor does not.
+	 */
+	public static function remove_title_support() : void {
+		remove_post_type_support( 'guest-author', 'title' );
 	}
 }

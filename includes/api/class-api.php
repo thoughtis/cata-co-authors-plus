@@ -21,7 +21,8 @@ class API {
 		add_filter( 'register_taxonomy_args', array( __CLASS__, 'update_taxonomy_args' ), 10, 2 );
 		add_filter( 'register_post_type_args', array( __CLASS__, 'update_post_type_args' ), 10, 2 );
 		add_action( 'init', array( __CLASS__, 'register_guest_author_meta' ) );
-		add_action( 'do_meta_boxes', array( __CLASS__, 'remove_cutstom_fields_box' ), 10, 0 );
+		// @priority 20 because new CoAuthors_Guest_Authors() happens at default priority.
+		add_action( 'init', array( __CLASS__, 'add_title_support' ), 20 );
 		add_filter( 'rest_guest-author_query', array( __CLASS__, 'post_meta_request_params' ), 10, 2 );
 	}
 
@@ -143,15 +144,6 @@ class API {
 	}
 
 	/**
-	 * Remove Custom Fields Box
-	 * Custom Fields must be enabled to get meta data into the API,
-	 * but we don't actually want it to be edited directly in the post editor.
-	 */
-	public static function remove_cutstom_fields_box() : void {
-		remove_meta_box( 'postcustom', 'guest-author', 'normal' );
-	}
-
-	/**
 	 * Current User Has CAP Capability
 	 * 
 	 * @global CoAuthors_Plus $coauthors_plus
@@ -198,4 +190,14 @@ class API {
 			)
 		);
 	}
+
+	/**
+	 * Add Title Support
+	 * In order for the API to create Guest Authors,
+	 * the post type needs to support the title field.
+	 */
+	public static function add_title_support() : void {
+		add_post_type_support( 'guest-author', 'title' );
+	}
+
 }
