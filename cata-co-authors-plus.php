@@ -30,6 +30,7 @@ require_once __DIR__ . '/includes/api/coauthor-controller/class-coauthor-control
 require_once __DIR__ . '/includes/api/guest-author-controller/class-guest-author-controller.php';
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 require_once __DIR__ . '/includes/fields/class-fields.php';
+require_once __DIR__ . '/includes/oembed/class-oembed.php';
 
 /**
  * Instantiate Classes
@@ -37,6 +38,7 @@ require_once __DIR__ . '/includes/fields/class-fields.php';
 new Cata\CoAuthors_Plus\API();
 new Cata\CoAuthors_Plus\Fields();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
+new Cata\CoAuthors_Plus\oEmbed();
 
 /**
  * Enable CoAuthors_Template_Filters
