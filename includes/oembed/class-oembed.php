@@ -3,7 +3,7 @@
  * oEmbed
  * 
  * @package Cata\CoAuthors_Plus
- * @since
+ * @since 0.3.0
  */
 
 namespace Cata\CoAuthors_Plus;
