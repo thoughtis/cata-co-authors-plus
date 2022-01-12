@@ -12,7 +12,7 @@
  * Description: Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.
  * Author:      Thought & Expression Co. <devjobs@thought.is>
  * Author URI:  https://thought.is
- * Version:     0.2.4
+ * Version:     0.3.0-beta1
  * License:     GPL v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -30,6 +30,7 @@ require_once __DIR__ . '/includes/api/coauthor-controller/class-coauthor-control
 require_once __DIR__ . '/includes/api/guest-author-controller/class-guest-author-controller.php';
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 require_once __DIR__ . '/includes/fields/class-fields.php';
+require_once __DIR__ . '/includes/oembed/class-oembed.php';
 
 /**
  * Instantiate Classes
@@ -37,6 +38,7 @@ require_once __DIR__ . '/includes/fields/class-fields.php';
 new Cata\CoAuthors_Plus\API();
 new Cata\CoAuthors_Plus\Fields();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
+new Cata\CoAuthors_Plus\oEmbed();
 
 /**
  * Enable CoAuthors_Template_Filters
