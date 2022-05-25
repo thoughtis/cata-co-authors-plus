@@ -30,6 +30,14 @@ class CoAuthor_Controller extends WP_REST_Terms_Controller {
 		if ( true !== $ask_an_adult ) {
 			return $ask_an_adult;
 		}
+
+		/**
+		 * Allow embed context since the sensitive data ( term description )
+		 * is not included.
+		 */
+		if ( 'embed' === $request->get_param('context') ) {
+			return true;
+		}
  
 		return API::current_user_has_cap_cap();
 	}
