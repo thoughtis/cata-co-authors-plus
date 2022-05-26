@@ -239,7 +239,7 @@ class API {
 						WP_REST_Request::from_url(
 							home_url( "/wp-json/wp/v2/media/{$attachment_id}" )
 						)
-					)
+					)->get_data()
 				);
 			}
 		}
