@@ -43,7 +43,9 @@ class API {
 		return array_merge(
 			$args,
 			array(
+				'rest_base'             => 'coauthor',
 				'rest_controller_class' => 'Cata\\CoAuthors_Plus\\API\\CoAuthor_Controller',
+				'show_in_rest'          => true,
 			)
 		);
 	}
