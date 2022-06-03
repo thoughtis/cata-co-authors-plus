@@ -8,6 +8,7 @@
 
 namespace Cata\CoAuthors_Plus;
 
+use WP_REST_Response;
 use WP_REST_Request;
 
 /**
@@ -24,6 +25,7 @@ class API {
 		// @priority 20 because new CoAuthors_Guest_Authors() happens at default priority.
 		add_action( 'init', array( __CLASS__, 'add_title_support' ), 20 );
 		add_filter( 'rest_guest-author_query', array( __CLASS__, 'post_meta_request_params' ), 10, 2 );
+		add_filter( 'rest_prepare_author', array( __CLASS__, 'prepare_author_response' ), 10, 3 );
 	}
 
 	/**
@@ -195,6 +197,56 @@ class API {
 	 */
 	public static function add_title_support() : void {
 		add_post_type_support( 'guest-author', 'title' );
+	}
+
+	/**
+	 * Prepare Author Response
+	 * 
+	 * @param WP_REST_Response $response
+	 * @return WP_REST_Response $response
+	 */
+	public static function prepare_author_response( WP_REST_Response $response ) : WP_REST_Response {
+		
+		global $coauthors_plus;
+		
+		$data   = $response->get_data();
+		$author = $coauthors_plus->get_coauthor_by( 'user_nicename', $data['slug'] );
+
+		if ( false === $author || ! ( isset($author->ID) && isset($author->user_nicename) ) ) {
+			return $response;
+		}
+
+		if ( ! isset( $author->type ) ) {
+			return $response;
+		}
+
+		if ( ! in_array( $author->type, array('guest-author', 'wpuser'), true ) ) {
+			return $response;
+		}
+
+		$data['profile'] = array(
+			'display_name' => $author->display_name,
+			'link'         => get_author_posts_url( $author->ID, $author->user_nicename ),
+			'media'        => array()
+		);
+
+		if ( 'guest-author' === $author->type ) {
+			$attachment_id = get_post_thumbnail_id( $author->ID );
+			if ( 0 !== absint( $attachment_id ) ) {
+				array_push(
+					$data['profile']['media'],
+					rest_get_server()->dispatch(
+						WP_REST_Request::from_url(
+							home_url( "/wp-json/wp/v2/media/{$attachment_id}" )
+						)
+					)->get_data()
+				);
+			}
+		}
+
+		$response->set_data( $data );
+
+		return $response;
 	}
 
 }
