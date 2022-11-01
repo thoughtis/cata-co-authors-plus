@@ -44,3 +44,20 @@ new Cata\CoAuthors_Plus\oEmbed();
  * Enable CoAuthors_Template_Filters
  */
 add_filter( 'coauthors_auto_apply_template_tags', '__return_true' );
+
+/**
+ * No Web Stories Support
+ *
+ * @link https://github.com/thoughtis/cata-co-authors-plus/issues/30
+ * @param $post_types Post types supporting the author taxonomy.
+ * @return array Updated array of post types, without web-story.
+ */
+function cata_cap_no_web_stories_support( array $post_types ) : array {
+	return array_values(
+		array_diff(
+			$post_types,
+			array( 'web-story' )
+		)
+	);
+}
+add_filter( 'coauthors_supported_post_types', 'cata_cap_no_web_stories_support' );
