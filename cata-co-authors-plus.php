@@ -12,7 +12,7 @@
  * Description: Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.
  * Author:      Thought & Expression Co. <devjobs@thought.is>
  * Author URI:  https://thought.is
- * Version:     0.5.0
+ * Version:     0.5.1
  * License:     GPL v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -44,3 +44,20 @@ new Cata\CoAuthors_Plus\oEmbed();
  * Enable CoAuthors_Template_Filters
  */
 add_filter( 'coauthors_auto_apply_template_tags', '__return_true' );
+
+/**
+ * No Web Stories Support
+ *
+ * @link https://github.com/thoughtis/cata-co-authors-plus/issues/30
+ * @param $post_types Post types supporting the author taxonomy.
+ * @return array Updated array of post types, without web-story.
+ */
+function cata_cap_no_web_stories_support( array $post_types ) : array {
+	return array_values(
+		array_diff(
+			$post_types,
+			array( 'web-story' )
+		)
+	);
+}
+add_filter( 'coauthors_supported_post_types', 'cata_cap_no_web_stories_support' );
