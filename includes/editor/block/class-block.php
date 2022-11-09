@@ -17,21 +17,17 @@ class Block {
 	 * Construct
 	 */
 	public function __construct() {
-		// Use block editor for published guest authors with a slug / cap-user_login
 		add_filter( 'use_block_editor_for_post_type', array(__CLASS__, 'dont_use_block_editor' ), 10, 2 );
 		add_filter( 'use_block_editor_for_post', array( __CLASS__, 'use_block_editor' ), 10, 2 );
-
-		// When we're sure we're in the block editor,
-		// remove the extra save button from CAP.
 		add_filter( 'enqueue_block_editor_assets', array( __CLASS__, 'add_meta_box_action' ) );
-
-		// Add the CAP nonce that normally goes with the save button to the block editor hidden fields.
 		add_action( 'block_editor_meta_box_hidden_fields',  array( __CLASS__, 'add_hidden_nonce_meta_box' ) );
+		add_filter( 'register_taxonomy_args', array(__CLASS__, 'update_author_taxonomy_args'), 10, 2 );
 	}
 
 	/**
-	 * Don't Use block Editor
-	 * 
+	 * Don't Use Block Editor
+	 * By default, use the classic editor.
+	 *
 	 * @param bool $use_block_editor
 	 * @param string $post_type
 	 */
@@ -44,7 +40,8 @@ class Block {
 
 	/**
 	 * Use Block Editor
-	 * 
+	 * Use block editor for published guest authors with a slug / cap-user_login
+	 *
 	 * @param bool $use_block_editor
 	 * @param WP_Post $post
 	 * @return bool
@@ -73,6 +70,7 @@ class Block {
 
 	/**
 	 * Add Meta Box Action
+	 * When we're sure we're in the block editor, remove the extra save button from CAP.
 	 */
 	public static function add_meta_box_action() : void {
 		// @priority 20 to override CoAuthors_Guest_Authors->action_add_meta_boxes().
@@ -99,5 +97,21 @@ class Block {
 			return;
 		}
 		wp_nonce_field( 'guest-author-nonce', 'guest-author-nonce' );
+	}
+
+	/**
+	 * Update Author Taxonomy Args
+	 * Make author publicy queryable so it works when used as a taxonomy filter in the query loop block.
+	 * 
+	 * @link https://core.trac.wordpress.org/browser/tags/6.1/src/wp-includes/blocks.php#L1317
+	 * @param array $args
+	 * @param string $taxonomy
+	 * @return array
+	 */
+	public static function update_author_taxonomy_args( array $args, string $taxonomy ) : array {
+		if ( 'author' !== $taxonomy ) {
+			return $args;
+		}
+		return array_merge( $args, array( 'publicly_queryable' => true ) );
 	}
 }
