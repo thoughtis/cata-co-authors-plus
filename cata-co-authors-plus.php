@@ -67,3 +67,21 @@ function cata_cap_no_web_stories_support( array $post_types ) : array {
 	);
 }
 add_filter( 'coauthors_supported_post_types', 'cata_cap_no_web_stories_support' );
+
+/**
+ * Get Plugin Directory URL
+ * 
+ * @return string
+ */
+function cata_cap_get_plugin_directory_url() : string {
+	return plugin_dir_url( __FILE__ );
+}
+
+/**
+ * Get Plugin Directory Path
+ * 
+ * @return string
+ */
+function cata_cap_get_plugin_directory_path() : string {
+	return plugin_dir_path( __FILE__ );
+}
