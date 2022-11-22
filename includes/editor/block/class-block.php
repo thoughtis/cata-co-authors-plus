@@ -22,6 +22,7 @@ class Block {
 		add_filter( 'enqueue_block_editor_assets', array( __CLASS__, 'add_meta_box_action' ) );
 		add_action( 'block_editor_meta_box_hidden_fields',  array( __CLASS__, 'add_hidden_nonce_meta_box' ) );
 		add_filter( 'register_taxonomy_args', array(__CLASS__, 'update_author_taxonomy_args'), 10, 2 );
+		add_action( 'enqueue_block_editor_assets', array( __CLASS__, 'add_block_editor_script' ) );
 	}
 
 	/**
@@ -114,4 +115,40 @@ class Block {
 		}
 		return array_merge( $args, array( 'publicly_queryable' => true ) );
 	}
+
+	/**
+	 * Add Block Editor Script
+	 */
+	public static function add_block_editor_script() : void {
+	
+		$screen = get_current_screen();
+
+		if ( ! is_a( $screen, 'WP_Screen' ) || 'guest-author' !== $screen->id ) {
+			return;
+		}
+	
+		$asset_file = include cata_cap_get_plugin_directory_path() . '/build/index.asset.php';
+		wp_enqueue_script(
+			'cata-cap-guest-author-block-editor',
+			cata_cap_get_plugin_directory_url() . 'build/index.js',
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
+		wp_add_inline_script('cata-cap-guest-author-block-editor', self::get_inline_script(), 'before' );
+	}
+
+	/**
+	 * Get Inline Script
+	 *
+	 * @return string
+	 */
+	public static function get_inline_script() : string {
+		global $wp_rewrite;
+		return sprintf(
+			'window.cata = window.cata || {}; window.cata.authorPermalinkStructure = "%s";',
+			trailingslashit( $wp_rewrite->get_author_permastruct() )
+		);
+	}
+
 }
