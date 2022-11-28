@@ -12,6 +12,11 @@ import { useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * Styles
+ */
+import './style.scss';
+
+/**
  * Guest Author URL
  */
 function CataCAPGuestAuthorURL() {

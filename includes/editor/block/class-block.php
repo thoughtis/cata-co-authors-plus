@@ -135,5 +135,12 @@ class Block {
 			$asset_file['version'],
 			true
 		);
+
+		wp_enqueue_style(
+			'cata-cap-guest-author-block-editor',
+			cata_cap_get_plugin_directory_url() . 'build/style-index.css',
+			array(),
+			$asset_file['version']
+		);
 	}
 }
