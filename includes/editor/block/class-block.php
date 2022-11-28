@@ -135,20 +135,5 @@ class Block {
 			$asset_file['version'],
 			true
 		);
-		wp_add_inline_script('cata-cap-guest-author-block-editor', self::get_inline_script(), 'before' );
 	}
-
-	/**
-	 * Get Inline Script
-	 *
-	 * @return string
-	 */
-	public static function get_inline_script() : string {
-		global $wp_rewrite;
-		return sprintf(
-			'window.cata = window.cata || {}; window.cata.authorPermalinkStructure = "%s";',
-			trailingslashit( $wp_rewrite->get_author_permastruct() )
-		);
-	}
-
 }
