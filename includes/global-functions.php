@@ -72,3 +72,34 @@ function cata_cap_has_queried_coauthor() : bool {
 function cata_cap_get_the_coauthor_meta( string $property, $author, $default = '' ) {
 	return cata_cap_safe_get_object_property( $property, $author, $default );
 }
+
+/**
+ * Get Guest Author Post Content
+ *
+ * @param stdClass $author Guest Author
+ */
+function cata_cap_get_guest_author_post_content( stdClass $author ) : string {
+	$guest_author_post = get_post( $author->ID );
+	if ( ! is_a( $guest_author_post, 'WP_Post' ) || 'guest-author' !== $guest_author_post->post_type ) {
+		return '';
+	}
+	return $guest_author_post->post_content;
+}
+
+/**
+ * CoAuthor has Post Content
+ *
+ * @param stdClass|WP_User $author CoAuthor who might be a Guest Author.
+ */
+function cata_cap_coauthor_has_post_content( $author ) : bool {
+	return cata_cap_is_guest_author( $author ) && '' !== cata_cap_get_guest_author_post_content( $author );
+}
+
+/**
+ * Queried CoAuthor has Post Content
+ *
+ * @param stdClass|WP_User $author CoAuthor who might be a Guest Author.
+ */
+function cata_cap_queried_coauthor_has_post_content() : bool {
+	return cata_cap_coauthor_has_post_content( cata_cap_get_queried_coauthor() );
+}
