@@ -39,9 +39,6 @@ require_once __DIR__ . '/includes/oembed/class-oembed.php';
  * Instantiate Classes
  */
 new Cata\CoAuthors_Plus\API();
-new Cata\CoAuthors_Plus\Editor();
-new Cata\CoAuthors_Plus\Editor\Block();
-new Cata\CoAuthors_Plus\Editor\Classic();
 new Cata\CoAuthors_Plus\Fields();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
 new Cata\CoAuthors_Plus\oEmbed();
@@ -85,3 +82,17 @@ function cata_cap_get_plugin_directory_url() : string {
 function cata_cap_get_plugin_directory_path() : string {
 	return plugin_dir_path( __FILE__ );
 }
+
+/**
+ * Use Block Editor
+ * Allow themes to opt in to block editor support for Guest Authors.
+ */
+function cata_cap_use_block_editor() : void {
+	if ( ! apply_filters( 'cata_cap_use_block_editor', false ) ) {
+		return;
+	}
+	new Cata\CoAuthors_Plus\Editor();
+	new Cata\CoAuthors_Plus\Editor\Block();
+	new Cata\CoAuthors_Plus\Editor\Classic();
+}
+add_action( 'after_setup_theme', 'cata_cap_use_block_editor' );
