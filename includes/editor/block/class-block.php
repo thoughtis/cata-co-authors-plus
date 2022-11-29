@@ -18,7 +18,8 @@ class Block {
 	 */
 	public function __construct() {
 		add_filter( 'use_block_editor_for_post_type', array(__CLASS__, 'dont_use_block_editor' ), 10, 2 );
-		add_filter( 'use_block_editor_for_post', array( __CLASS__, 'use_block_editor' ), 10, 2 );
+		// @priority 20 in case a theme is using default prirority, still easily changed.
+		add_filter( 'use_block_editor_for_post', array( __CLASS__, 'use_block_editor' ), 20, 2 );
 		add_filter( 'enqueue_block_editor_assets', array( __CLASS__, 'add_meta_box_action' ) );
 		add_action( 'block_editor_meta_box_hidden_fields',  array( __CLASS__, 'add_hidden_nonce_meta_box' ) );
 		add_filter( 'register_taxonomy_args', array(__CLASS__, 'update_author_taxonomy_args'), 10, 2 );
