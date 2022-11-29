@@ -1,4 +1,23 @@
 {
+  "name": "cata-co-authors-plus",
+  "version": "0.6.0-beta4",
+  "description": "Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.",
+  "main":"src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "./node_modules/.bin/wp-scripts build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thoughtis/cata-co-authors-plus.git"
+  },
+  "author": "Thought and Expression Co. <devjobs@thought.is>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/thoughtis/cata-co-authors-plus/issues"
+  },
+  "homepage": "https://github.com/thoughtis/cata-co-authors-plus#readme",
+  "dependencies": {},
   "devDependencies": {
     "@wordpress/scripts": "^24.6.0"
   }
