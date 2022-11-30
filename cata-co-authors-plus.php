@@ -12,7 +12,7 @@
  * Description: Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.
  * Author:      Thought & Expression Co. <devjobs@thought.is>
  * Author URI:  https://thought.is
- * Version:     0.5.1
+ * Version:     0.6.0-beta5
  * License:     GPL v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -28,6 +28,9 @@ require_once __DIR__ . '/includes/global-functions.php';
 require_once __DIR__ . '/includes/api/class-api.php';
 require_once __DIR__ . '/includes/api/coauthor-controller/class-coauthor-controller.php';
 require_once __DIR__ . '/includes/api/guest-author-controller/class-guest-author-controller.php';
+require_once __DIR__ . '/includes/editor/class-editor.php';
+require_once __DIR__ . '/includes/editor/block/class-block.php';
+require_once __DIR__ . '/includes/editor/classic/class-classic.php';
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 require_once __DIR__ . '/includes/fields/class-fields.php';
 require_once __DIR__ . '/includes/oembed/class-oembed.php';
@@ -61,3 +64,35 @@ function cata_cap_no_web_stories_support( array $post_types ) : array {
 	);
 }
 add_filter( 'coauthors_supported_post_types', 'cata_cap_no_web_stories_support' );
+
+/**
+ * Get Plugin Directory URL
+ * 
+ * @return string
+ */
+function cata_cap_get_plugin_directory_url() : string {
+	return plugin_dir_url( __FILE__ );
+}
+
+/**
+ * Get Plugin Directory Path
+ * 
+ * @return string
+ */
+function cata_cap_get_plugin_directory_path() : string {
+	return plugin_dir_path( __FILE__ );
+}
+
+/**
+ * Use Block Editor
+ * Allow themes to opt in to block editor support for Guest Authors.
+ */
+function cata_cap_use_block_editor() : void {
+	if ( ! apply_filters( 'cata_cap_use_block_editor', false ) ) {
+		return;
+	}
+	new Cata\CoAuthors_Plus\Editor();
+	new Cata\CoAuthors_Plus\Editor\Block();
+	new Cata\CoAuthors_Plus\Editor\Classic();
+}
+add_action( 'after_setup_theme', 'cata_cap_use_block_editor' );
