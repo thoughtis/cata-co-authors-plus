@@ -38,26 +38,12 @@ function cata_cap_is_guest_author( $author ) : bool {
 }
 
 /**
- * Get Global Guest Author
- * 
- * @global CoAuthors_Plus $coauthors_plus Instance of CoAuthors_Plus.
- * @return stdClass|WP_User|false Result of `$coauthors_plus->get_coauthor_by`
- */
-function cata_cap_get_queried_coauthor() {
-	global $coauthors_plus;
-	return $coauthors_plus->get_coauthor_by(
-		'user_nicename',
-		sanitize_user( get_query_var( 'author_name' ) )
-	);
-}
-
-/**
  * Has Queried CoAuthor
  * 
  * @return bool Whether the coauthor referred to be the query var `author_name` was found.
  */
 function cata_cap_has_queried_coauthor() : bool {
-	$author = cata_cap_get_queried_coauthor();
+	$author = get_queried_object();
 	return cata_cap_is_guest_author( $author ) || is_a( $author, 'WP_User' );
 }
 
@@ -101,5 +87,5 @@ function cata_cap_coauthor_has_post_content( $author ) : bool {
  * @param stdClass|WP_User $author CoAuthor who might be a Guest Author.
  */
 function cata_cap_queried_coauthor_has_post_content() : bool {
-	return cata_cap_coauthor_has_post_content( cata_cap_get_queried_coauthor() );
+	return cata_cap_coauthor_has_post_content( get_queried_object() );
 }
