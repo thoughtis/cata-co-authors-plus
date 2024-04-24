@@ -38,7 +38,7 @@ export default function GuestAuthorURL() {
 			return;
 		}
 		apiFetch( {
-			path: `/wp/v2/coauthor?slug=${slug}`
+			path: `/wp/v2/coauthors?slug=${slug}`
 		})
 			.then( handleResponse )
 			.catch( handleError )

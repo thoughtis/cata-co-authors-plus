@@ -43,9 +43,7 @@ class API {
 		return array_merge(
 			$args,
 			array(
-				'rest_base'             => 'coauthor',
 				'rest_controller_class' => 'Cata\\CoAuthors_Plus\\API\\CoAuthor_Controller',
-				'show_in_rest'          => true,
 			)
 		);
 	}
@@ -67,7 +65,6 @@ class API {
 			$args,
 			array(
 				'rest_controller_class' => 'Cata\\CoAuthors_Plus\\API\\Guest_Author_Controller',
-				'show_in_rest'          => true,
 				'supports'              => array_merge(
 					$args['supports'],
 					array( 'custom-fields' )
