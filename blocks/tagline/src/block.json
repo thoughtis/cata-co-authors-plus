@@ -1,0 +1,52 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cata-cap/tagline",
+	"version": "0.1.0",
+	"title": "Co-Author Tagline",
+	"category": "theme",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"color": {
+			"link": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalFontStyle": true,
+			"__experimentalFontWeight": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalTextTransform": true,
+			"__experimentalDefaultControls": {}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"margin": false,
+				"padding": false
+			}
+		}
+	},
+	"usesContext": [
+		"co-authors-plus/author"
+	],
+	"attributes": {
+		"textAlign": {
+			"type": "string"
+		}
+	},
+	"textdomain": "cata",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

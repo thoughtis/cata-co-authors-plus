@@ -44,6 +44,11 @@ new Cata\CoAuthors_Plus\Jetpack_Compat();
 new Cata\CoAuthors_Plus\oEmbed();
 
 /**
+ * Register Blocks
+ */
+require_once __DIR__ . '/blocks/tagline/tagline.php';
+
+/**
  * Enable CoAuthors_Template_Filters
  */
 add_filter( 'coauthors_auto_apply_template_tags', '__return_true' );
