@@ -5,8 +5,7 @@
   "version": "0.1.0",
   "title": "Co-Author Tagline",
   "category": "theme",
-  "icon": "smiley",
-  "description": "Example block scaffolded with Create Block tool.",
+  "description": "A short description of an author and their work.",
   "example": {},
   "supports": {
     "html": false,
