@@ -1,6 +1,6 @@
 <?php
 /**
- * Fields
+ * Meta Fields
  * 
  * @package Cata\CoAuthors_Plus
  * @since 0.1.2
@@ -9,9 +9,9 @@
 namespace Cata\CoAuthors_Plus;
 
 /**
- * Fields
+ * Meta Fields
  */
-class Fields {
+class Meta_Fields {
 	/**
 	 * Field to Remove
 	 * 
