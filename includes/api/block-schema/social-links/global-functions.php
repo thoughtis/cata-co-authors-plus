@@ -2,7 +2,8 @@
 /**
  * Authors - Global Functions
  *
- * @package Collective_World
+ * @package Cata\CoAuthors_Plus
+ * @since
  */
 
 /**
