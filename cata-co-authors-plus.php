@@ -26,26 +26,32 @@ require_once __DIR__ . '/includes/global-functions.php';
  * Require classes
  */
 require_once __DIR__ . '/includes/api/class-api.php';
+require_once __DIR__ . '/includes/api/block-schema/social-links/class-social-links.php';
+require_once __DIR__ . '/includes/api/block-schema/social-links/global-functions.php';
+require_once __DIR__ . '/includes/api/block-schema/tagline/class-tagline.php';
 require_once __DIR__ . '/includes/api/coauthor-controller/class-coauthor-controller.php';
 require_once __DIR__ . '/includes/api/guest-author-controller/class-guest-author-controller.php';
 require_once __DIR__ . '/includes/editor/class-editor.php';
 require_once __DIR__ . '/includes/editor/block/class-block.php';
 require_once __DIR__ . '/includes/editor/classic/class-classic.php';
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
-require_once __DIR__ . '/includes/fields/class-fields.php';
+require_once __DIR__ . '/includes/meta-fields/class-meta-fields.php';
 require_once __DIR__ . '/includes/oembed/class-oembed.php';
 
 /**
  * Instantiate Classes
  */
 new Cata\CoAuthors_Plus\API();
-new Cata\CoAuthors_Plus\Fields();
+new Cata\CoAuthors_Plus\API\Block_Schema\Social_Links();
+new Cata\CoAuthors_Plus\API\Block_Schema\Tagline();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
+new Cata\CoAuthors_Plus\Meta_Fields();
 new Cata\CoAuthors_Plus\oEmbed();
 
 /**
  * Register Blocks
  */
+require_once __DIR__ . '/blocks/social-links/social-links.php';
 require_once __DIR__ . '/blocks/tagline/tagline.php';
 
 /**
