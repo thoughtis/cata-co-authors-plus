@@ -3,7 +3,7 @@
  * Tagline
  * 
  * @package Cata\CoAuthors_Plus
- * @since
+ * @since 0.6.3
  */
 
 namespace Cata\CoAuthors_Plus\API\Block_Schema;

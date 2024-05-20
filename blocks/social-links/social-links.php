@@ -3,6 +3,7 @@
  * Blocks > Social Links
  * 
  * @package Cata\CoAuthors_Plus\Blocks
+ * @since 0.6.3
  */
 
 namespace Cata\CoAuthors_Plus\Blocks;

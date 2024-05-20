@@ -3,7 +3,7 @@
  * Authors - Global Functions
  *
  * @package Cata\CoAuthors_Plus
- * @since
+ * @since 0.6.3
  */
 
 /**
