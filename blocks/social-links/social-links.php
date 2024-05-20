@@ -49,7 +49,7 @@ function render_social_link_with_coauthor_context( string $block_content, array 
 	
 	$block['attrs']['url'] = $links[0]['url'];
 	
-	return (new WP_Block( $block ))->render();		
+	return (new WP_Block( $block, $instance->context ))->render();		
 }
 add_filter( 'render_block', __NAMESPACE__ . '\\render_social_link_with_coauthor_context', 10, 3 );
 
@@ -62,7 +62,13 @@ add_filter( 'render_block', __NAMESPACE__ . '\\render_social_link_with_coauthor_
 function add_coauthor_context_support_to_social_link_block( array $args, string $block_type ): array {
 	if ( 'core/social-link' !== $block_type ) {
 		return $args;
-	}	
-	return array( ...$args, 'uses_context' => ['co-authors-plus/author'] );
+	}
+	return array(
+		...$args,
+		'uses_context' => array(
+			...$args['uses_context'],
+			'co-authors-plus/author'
+		)
+	);
 }
 add_filter( 'register_block_type_args', __NAMESPACE__ . '\\add_coauthor_context_support_to_social_link_block', 10, 2 );
