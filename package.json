@@ -19,7 +19,7 @@
   "homepage": "https://github.com/thoughtis/cata-co-authors-plus#readme",
   "devDependencies": {
     "@wordpress/icons": "^9.49.0",
-    "@wordpress/scripts": "^27.8.0",
+    "@wordpress/scripts": "wp-6.6",
     "classnames": "^2.5.1"
   }
 }
