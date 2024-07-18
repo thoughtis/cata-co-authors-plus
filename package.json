@@ -1,6 +1,6 @@
 {
   "name": "cata-co-authors-plus",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.",
   "main": "src/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/thoughtis/cata-co-authors-plus#readme",
   "devDependencies": {
     "@wordpress/icons": "^9.49.0",
-    "@wordpress/scripts": "^27.8.0",
+    "@wordpress/scripts": "wp-6.6",
     "classnames": "^2.5.1"
   }
 }
