@@ -16,7 +16,7 @@ class VIP_Compat {
 	 * Construct
 	 */
 	public function __construct() {
-		add_filter( 'block_editor_settings_all', array( __CLASS__, 'image_sitemap_skip_avatars' ) );
+		add_filter( 'block_editor_settings_all', array( __CLASS__, 'replace_image_dimensions_editor_setting' ) );
 	}
 
 	/**
