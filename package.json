@@ -1,6 +1,6 @@
 {
   "name": "cata-co-authors-plus",
-  "version": "0.6.4",
+  "version": "0.6.5-beta1",
   "description": "Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.",
   "main": "src/index.js",
   "scripts": {
