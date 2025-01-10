@@ -25,6 +25,7 @@ class Editor {
 	 */
 	public static function add_editor_support() : void {
 		add_post_type_support( 'guest-author', 'editor' );
+		add_post_type_support( 'guest-author', 'autosave' );
 	}
 
 	/**
