@@ -9,9 +9,9 @@
  */
 
 $author    = $block->context['co-authors-plus/author'] ?? array();
-$author_id = $author['id'];
+$author_id = $author['id'] ?? 0;
 
-if ( 'guest-author' !== get_post_type( $author_id ) ) {
+if ( 0 === $author_id || 'guest-author' !== get_post_type( $author_id ) ) {
 	return;
 }
 
