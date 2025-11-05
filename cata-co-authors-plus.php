@@ -55,6 +55,7 @@ new Cata\CoAuthors_Plus\VIP_Compat();
  */
 require_once __DIR__ . '/blocks/social-links/social-links.php';
 require_once __DIR__ . '/blocks/tagline/tagline.php';
+require_once __DIR__ . '/blocks/content/content.php';
 
 /**
  * Enable CoAuthors_Template_Filters
