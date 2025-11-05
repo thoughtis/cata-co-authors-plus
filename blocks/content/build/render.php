@@ -15,16 +15,15 @@ if ( 0 === $author_id || 'guest-author' !== get_post_type( $author_id ) ) {
 	return;
 }
 
-$author_content = get_the_content( null, false, $author_id );
+$author_content = wp_kses_post( get_the_content( null, false, $author_id ) );
 
 if ( '' === $author_content ) {
 	return;
 }
 
 $wrapper_attributes = get_block_wrapper_attributes( apply_filters( "{$block->name}_block_wrapper_attributes", [], $attributes ) );
-
 ?>
 
 <div <?php echo $wrapper_attributes ?>>
-	<?php echo wp_kses_post( $author_content ) ?>
+	<?php echo do_blocks( $author_content ) ?>
 </div>
