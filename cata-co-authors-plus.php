@@ -12,7 +12,7 @@
  * Description: Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.
  * Author:      Thought & Expression Co. <devjobs@thought.is>
  * Author URI:  https://thought.is
- * Version:     0.6.6
+ * Version:     0.6.7
  * License:     GPL v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -55,6 +55,7 @@ new Cata\CoAuthors_Plus\VIP_Compat();
  */
 require_once __DIR__ . '/blocks/social-links/social-links.php';
 require_once __DIR__ . '/blocks/tagline/tagline.php';
+require_once __DIR__ . '/blocks/content/content.php';
 
 /**
  * Enable CoAuthors_Template_Filters
