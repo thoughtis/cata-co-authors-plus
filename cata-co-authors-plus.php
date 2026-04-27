@@ -12,7 +12,7 @@
  * Description: Common functions, configuration and compatibility fixes for Co-Authors Plus when used in Cata child themes. Not a fork or replacement for CAP.
  * Author:      Thought & Expression Co. <devjobs@thought.is>
  * Author URI:  https://thought.is
- * Version:     0.6.7
+ * Version:     0.6.8
  * License:     GPL v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -37,7 +37,16 @@ require_once __DIR__ . '/includes/editor/classic/class-classic.php';
 require_once __DIR__ . '/includes/jetpack-compat/class-jetpack-compat.php';
 require_once __DIR__ . '/includes/meta-fields/class-meta-fields.php';
 require_once __DIR__ . '/includes/oembed/class-oembed.php';
+require_once __DIR__ . '/includes/original-author/class-original-author.php';
 require_once __DIR__ . '/includes/vip-compat/class-vip-compat.php';
+
+/**
+ * Register WP-CLI Commands
+ */
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once __DIR__ . '/includes/cli/class-cli.php';
+	WP_CLI::add_command( 'cata-cap', Cata\CoAuthors_Plus\CLI::class );
+}
 
 /**
  * Instantiate Classes
@@ -48,6 +57,7 @@ new Cata\CoAuthors_Plus\API\Block_Schema\Tagline();
 new Cata\CoAuthors_Plus\Jetpack_Compat();
 new Cata\CoAuthors_Plus\Meta_Fields();
 new Cata\CoAuthors_Plus\oEmbed();
+new Cata\CoAuthors_Plus\Original_Author();
 new Cata\CoAuthors_Plus\VIP_Compat();
 
 /**
