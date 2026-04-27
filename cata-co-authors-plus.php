@@ -41,6 +41,14 @@ require_once __DIR__ . '/includes/original-author/class-original-author.php';
 require_once __DIR__ . '/includes/vip-compat/class-vip-compat.php';
 
 /**
+ * Register WP-CLI Commands
+ */
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once __DIR__ . '/includes/cli/class-cli.php';
+	WP_CLI::add_command( 'cata-cap', Cata\CoAuthors_Plus\CLI::class );
+}
+
+/**
  * Instantiate Classes
  */
 new Cata\CoAuthors_Plus\API();
