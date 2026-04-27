@@ -37,41 +37,43 @@ class CLI extends \WP_CLI_Command {
 
 		$dry_run    = (bool) \WP_CLI\Utils\get_flag_value( $assoc_args, 'dry-run', false );
 		$batch_size = 200;
+		$min_id     = 0;
+		$batch      = 0;
+		$total_set  = 0;
+		$total_skipped = 0;
 
 		if ( $dry_run ) {
 			\WP_CLI::log( 'Dry run — no changes will be made.' );
 		}
 
-		$query_args = array(
-			'post_type'      => 'post',
-			'post_status'    => 'any',
-			'posts_per_page' => $batch_size,
-			'fields'         => 'ids',
-			'no_found_rows'  => true,
-			'meta_query'     => array(
-				array(
-					'key'     => '_original_author',
-					'compare' => 'NOT EXISTS',
-				),
-			),
-		);
-
-		$total_set     = 0;
-		$total_skipped = 0;
-		$batch         = 0;
-
 		while ( true ) {
-			// Real run: always fetch page 1 — processed posts drop out of the NOT EXISTS query.
-			// Dry run: paginate forward since data is unchanged.
-			$query_args['paged'] = $dry_run ? ( $batch + 1 ) : 1;
 			$batch++;
 
-			$q = new \WP_Query( $query_args );
-			if ( ! $q->have_posts() ) {
+			// Paginate by ID so each post is visited exactly once, whether or not it gets meta set.
+			$post_ids = $wpdb->get_col(
+				$wpdb->prepare(
+					"SELECT p.ID
+					 FROM {$wpdb->posts} p
+					 WHERE p.post_type = 'post'
+					 AND p.post_status NOT IN ('auto-draft', 'trash')
+					 AND p.ID > %d
+					 AND NOT EXISTS (
+					     SELECT 1 FROM {$wpdb->postmeta} pm
+					     WHERE pm.post_id = p.ID AND pm.meta_key = '_original_author'
+					 )
+					 ORDER BY p.ID ASC
+					 LIMIT %d",
+					$min_id,
+					$batch_size
+				)
+			);
+
+			if ( empty( $post_ids ) ) {
 				break;
 			}
 
-			$post_ids    = array_map( 'intval', $q->posts );
+			$post_ids    = array_map( 'intval', $post_ids );
+			$min_id      = max( $post_ids );
 			$placeholder = implode( ',', $post_ids );
 
 			// Fetch the author of the earliest revision for each post in this batch in one query.
