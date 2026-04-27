@@ -15,7 +15,7 @@ class Original_Author {
 	 * Construct
 	 */
 	public function __construct() {
-		add_action( 'wp_after_insert_post', array( __CLASS__, 'snapshot_on_creation' ), 10, 3 );
+		add_action( 'save_post', array( __CLASS__, 'snapshot_on_creation' ), 1, 3 );
 		add_action( 'init', array( __CLASS__, 'register_original_author_meta' ) );
 		add_action( 'rest_api_init', array( __CLASS__, 'register_rest_field' ) );
 	}
@@ -23,6 +23,7 @@ class Original_Author {
 	/**
 	 * Snapshot On Creation
 	 * Captures the original post_author into _original_author meta on first save only.
+	 * Priority 1 ensures this runs before CAP overwrites post_author at priority 10.
 	 *
 	 * @param int      $post_id
 	 * @param \WP_Post $post
