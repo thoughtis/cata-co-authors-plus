@@ -33,7 +33,8 @@
 				"margin": false,
 				"padding": false
 			}
-		}
+		},
+		"align": ["wide", "full"]
 	},
 	"usesContext": [
 		"co-authors-plus/author"
