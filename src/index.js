@@ -27,7 +27,7 @@ function CataCAPGuestAuthor() {
 	/**
 	 * Remove Post Status
 	 */
-	const { removeEditorPanel } = useDispatch('core/edit-post');
+	const { removeEditorPanel } = useDispatch('core/editor');
 
 	useEffect( () => {
 		removeEditorPanel( 'post-status' );
